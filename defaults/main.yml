@@ -18,11 +18,6 @@ nrpe_disable_sudo_requiretty: False
 
 ########
 
-# One true at a time please
-install_opsview: False
-install_nrpe: True
-
-opsview_cfg_file: "/usr/local/nagios/etc/nrpe_local/override.cfg"
 nagios_cfg_file: "/etc/nrpe.d/override.cfg"
 nagios_allowed_hosts: "127.0.0.1,10.1.1.1,10.2.2.2"
 
@@ -46,10 +41,8 @@ nagios_connection_timeout: 300
 #nagios_extra_settings_list:
 # - include_dir={{ nagios_include_dir }}
 
-opsview_include_dir: "/usr/local/nagios/etc/nrpe_local/"
 nagios_include_dir: "/etc/nrpe.d/"
 
-opsview_libexec_dir: "/usr/local/nagios/libexec"
 nagios_plugins_dir: "/usr/lib64/nagios/plugins"
 
 nagios_custom_checks_file: "check.cfg"
@@ -60,14 +53,6 @@ nagios_plugins:
  - { command: "check_load", path: "{{ nagios_plugins_dir }}/check_load", arguments: "$ARG1$" }
  - { command: "check_swap", path: "{{ nagios_plugins_dir }}/check_swap", arguments: "$ARG1$" }
  - { command: "check_procs", path: "{{ nagios_plugins_dir }}/check_procs", arguments: "$ARG1$" }
-opsview_plugins:
- - { command: "check_users", path: "{{ opsview_libexec_dir }}/check_users", arguments: "$ARG1$" }
- - { command: "check_load", path: "{{ opsview_libexec_dir }}/check_load", arguments: "$ARG1$" }
- - { command: "check_disk", path: "{{ opsview_libexec_dir }}/check_disk", arguments: "$ARG1$" }
- - { command: "check_swap", path: "{{ opsview_libexec_dir }}/check_swap", arguments: "$ARG1$" }
- - { command: "check_procs", path: "{{ opsview_libexec_dir }}/check_procs", arguments: "$ARG1$" }
- - { command: "check_memory", path: "{{ opsview_libexec_dir }}/check_memory", arguments: "$ARG1$" }
- - { command: "check_file_age", path: "{{ opsview_libexec_dir }}/check_file_age", arguments: "$ARG1$" }
 
 nrpe_extra_rpms:
  - nagios-common

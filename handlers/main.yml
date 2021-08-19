@@ -10,6 +10,3 @@
 
  - name: restart nrpe
    service: name=nrpe state=restarted
-
- - name: restart opsview-agent
-   service: name=opsview-agent state=restarted
