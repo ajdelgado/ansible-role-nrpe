@@ -17,7 +17,7 @@ With EL6 changing nrpe_user and nrpe_group should work.
 
 https://github.com/CSCfi/ansible-role-nrpe-plugins/ is a sister-role which one can use to actually install plugins.
 
-Support for opsview-agent was removed from this role after version 1.10
+Support for opsview-agent was removed from this role after version 1.4.1
 
 Requirements
 ------------
