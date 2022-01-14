@@ -2,12 +2,12 @@
 # tasks file for ansible-role-nrpe
 #
 - name: Install nrpe package
-  yum: state=present name=nrpe
+  package: state=present name=nrpe
   notify:
     - "restart nrpe"
 
 - name: Install extra nrpe packages
-  yum:  state=present name="{{ nrpe_extra_rpms }}"
+  package:  state=present name="{{ nrpe_extra_rpms }}"
   notify:
     - "restart nrpe"
 
