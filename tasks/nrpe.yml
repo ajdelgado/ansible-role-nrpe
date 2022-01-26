@@ -36,12 +36,21 @@
     - "restart nrpe"
   when: remove_hardcoded_checks|default(false)|bool
 
+- name: Ensure NRPE group exists
+  group:
+    name: "{{ nrpe_group }}"
+
+- name: Ensure NRPE user exists
+  user:
+    name: "{{ nrpe_user }}"
+    group: "{{ nrpe_group }}"
+
 - name: Ensure Nagios include dir exists
   file:
     path: "{{ nagios_include_dir }}"
     state: directory
-    owner: "{{ nagios_uid }}"
-    group: "{{ nagios_gid }}"
+    owner: "{{ nrpe_user }}"
+    group: "{{ nrpe_group }}"
 
 - name: Template in override config file (to set allowed_hosts)
   template: src=override.cfg.j2 dest={{ nagios_cfg_file }} mode=0644
