@@ -15,10 +15,17 @@
     - "restart nrpe"
   when: ansible_os_family == 'RedHat'
 
-- name: Install extra nrpe packages
+- name: Install extra nrpe RPMs
   package:  state=present name="{{ nrpe_extra_rpms }}"
   notify:
     - "restart nrpe"
+  when: ansible_os_family == 'RedHat'
+
+- name: Install extra nrpe DEBs
+  package:  state=present name="{{ nrpe_extra_debs }}"
+  notify:
+    - "restart nrpe"
+  when: ansible_os_family == 'Debian'
 
 - name: Remove all hardcoded command settings from default nrpe.cfg
   lineinfile:
