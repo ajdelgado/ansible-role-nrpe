@@ -2,7 +2,7 @@
 # tasks file for ansible-role-nrpe
 #
 - name: Install nrpe package
-  package: state=present name=nrpe
+  package: state=present name=nagios-nrpe-server
   notify:
     - "restart nrpe"
 
