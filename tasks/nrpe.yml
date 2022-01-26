@@ -67,8 +67,19 @@
   notify:
     - "restart nrpe"
 
-- name: Make sure nrpe is started and enabled
-  service: name=nrpe state=started enabled=yes
+- name: Make sure nrpe is started and enabled in RedHat
+  service:
+    name: nrpe
+    state: started
+    enabled: yes
+  when: ansible_os_family == 'RedHat'
+
+- name: Make sure nrpe is started and enabled in Ubuntu
+  service:
+    name: nagios-nrpe-server
+    state: started
+    enabled: yes
+  when: ansible_facts["lsb"]["id"] == "Ubuntu"
 
 - name: Allow nrpe_user to run some HP commands on HP systems
   template: src=sudoers_nrpe_hp dest=/etc/sudoers.d/sudoers_nrpe_hp mode=640
