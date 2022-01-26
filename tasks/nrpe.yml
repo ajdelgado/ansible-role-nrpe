@@ -1,7 +1,7 @@
 ---
 # tasks file for ansible-role-nrpe
 #
-- name: Install nrpe package
+- name: Install nrpe DEB package
   package:
     state: present
     name: nagios-nrpe-server
@@ -9,7 +9,7 @@
     - "restart nrpe"
   when: ansible_facts["lsb"]["id"] == "Ubuntu"
 
-- name: Install nrpe package
+- name: Install nrpe RPM package
   package: state=present name=nrpe
   notify:
     - "restart nrpe"
@@ -25,7 +25,7 @@
   package:  state=present name="{{ nrpe_extra_debs }}"
   notify:
     - "restart nrpe"
-  when: ansible_os_family == 'Debian'
+  when: ansible_facts["lsb"]["id"] == "Ubuntu"
 
 - name: Remove all hardcoded command settings from default nrpe.cfg
   lineinfile:
