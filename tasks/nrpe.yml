@@ -32,6 +32,7 @@
     state: absent
     regexp: '^command\['
     path: '/etc/nagios/nrpe.cfg'
+    backup: yes
   notify:
     - "restart nrpe"
   when: remove_hardcoded_checks|default(false)|bool
@@ -55,6 +56,14 @@
 - name: Template in override config file (to set allowed_hosts)
   template: src=override.cfg.j2 dest={{ nagios_cfg_file }} mode=0644
             owner={{ nrpe_user }} group={{ nrpe_group }}
+  notify:
+    - "restart nrpe"
+
+- name: Ensure override config file is included
+  lineinfile:
+    path: /etc/nagios/nrpe.cfg
+    line: "include={{ nagios_cfg_file }}"
+    backup: yes
   notify:
     - "restart nrpe"
 
