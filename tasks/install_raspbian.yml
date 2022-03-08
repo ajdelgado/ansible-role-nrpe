@@ -23,7 +23,7 @@
   shell: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/configure --enable-bash-command-substitution  --with-init-type=systemd --with-inetd-type=systemd --with-pkgsysconfdir=/etc/nagios --enable-command-args --quiet"
   args:
     chdir: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}"
-    create: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/uninstall"
+    creates: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/uninstall"
 
 - name: Ensure Nagios group exists
   group:
@@ -40,13 +40,13 @@
   shell: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/make install"
   args:
     chdir: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}"
-    #create: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/uninstall"
+    #creates: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/uninstall"
 
 - name: Install configuration files from source code
   shell: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/make install-config"
   args:
     chdir: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}"
-    #create: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/uninstall"
+    #creates: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/uninstall"
 
 #echo >> /etc/services
 #echo '# Nagios services' >> /etc/services
