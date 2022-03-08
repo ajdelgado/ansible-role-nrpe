@@ -1,0 +1,26 @@
+---
+# https://support.nagios.com/kb/article.php?id=515#Raspbian
+- name: Ensure required software for compiling is installed
+  package:
+    name:
+      - autoconf
+      - automake
+      - gcc
+      - libc6
+      - libmcrypt-dev
+      - make
+      - libssl-dev
+      - wget
+
+- name: Ensure source tar file is downloaded
+  unarchive:
+    src: "https://github.com/NagiosEnterprises/nrpe/archive/nrpe-{{ nrpe_raspbian_version }}.tar.gz"
+    dest: /usr/src
+    remote_src: yes
+
+- name: Configure compilation files
+  shell: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/configure --enable-bash-command-substitution  --with-init-type=systemd --with-inetd-type=systemd --with-pkgsysconfdir=/etc/nagios --enable-command-args --quiet "
+  args:
+    chdir: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}"
+
+# Link /usr/local/sbin/nrpe
