@@ -7,7 +7,6 @@
 # The nrpe systemd cannot handle this without modifications to
 # /usr/lib/systemd/system/nrpe.service
 #
-nrpe_raspbian_version: 4.0.3
 nrpe_user_creation: False
 nrpe_user: "nrpe"
 nrpe_group: "nrpe"

@@ -7,7 +7,7 @@
     name: nagios-nrpe-server
   notify:
     - "restart nrpe"
-  when: ansible_facts["lsb"]["id"] == "Ubuntu"
+  when: ansible_facts['distribution'] == "Debian"
 
 - name: Install nrpe RPM package
   package: state=present name=nrpe
