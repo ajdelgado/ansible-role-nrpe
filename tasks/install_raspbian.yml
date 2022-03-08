@@ -46,13 +46,13 @@
   shell: "make install"
   args:
     chdir: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}"
-    #creates: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/uninstall"
+    creates: /usr/sbin/nrpe
 
 - name: Install configuration files from source code
   shell: "make install-config"
   args:
     chdir: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}"
-    #creates: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/uninstall"
+    creates: /etc/nagios/nrpe.cfg
 
 #echo >> /etc/services
 #echo '# Nagios services' >> /etc/services
@@ -62,12 +62,13 @@
   shell: "make install-init"
   args:
     chdir: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}"
-    #create: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/uninstall"
+    creates: /lib/systemd/system/nrpe.service
 
 - name: Ensure NRPE service is enabled and started
   systemd:
     name: nrpe
-    enable: yes
+    enabled: yes
+    daemon_reload: yes
     state: started
 
 - name: Ensure UFW rule for NRPE exists
