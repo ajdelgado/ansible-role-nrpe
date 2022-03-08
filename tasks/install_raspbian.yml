@@ -17,10 +17,57 @@
     src: "https://github.com/NagiosEnterprises/nrpe/archive/nrpe-{{ nrpe_raspbian_version }}.tar.gz"
     dest: /usr/src
     remote_src: yes
+    creates: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/configure"
 
 - name: Configure compilation files
-  shell: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/configure --enable-bash-command-substitution  --with-init-type=systemd --with-inetd-type=systemd --with-pkgsysconfdir=/etc/nagios --enable-command-args --quiet "
+  shell: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/configure --enable-bash-command-substitution  --with-init-type=systemd --with-inetd-type=systemd --with-pkgsysconfdir=/etc/nagios --enable-command-args --quiet"
   args:
     chdir: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}"
+    create: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/uninstall"
+
+- name: Ensure Nagios group exists
+  group:
+    name: nagios
+    gid: 223
+
+- name: Ensure Nagios user exists
+  user:
+    name: nagios
+    uid: 223
+    group: nagios
+
+- name: Install source code
+  shell: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/make install"
+  args:
+    chdir: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}"
+    #create: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/uninstall"
+
+- name: Install configuration files from source code
+  shell: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/make install-config"
+  args:
+    chdir: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}"
+    #create: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/uninstall"
+
+#echo >> /etc/services
+#echo '# Nagios services' >> /etc/services
+#echo 'nrpe    5666/tcp' >> /etc/services
+
+- name: Install systemd unit for NRPE
+  shell: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/make install-init"
+  args:
+    chdir: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}"
+    #create: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/uninstall"
+
+- name: Ensure NRPE service is enabled and started
+  systemd:
+    name: nrpe
+    enable: yes
+    state: started
+
+- name: Ensure UFW rule for NRPE exists
+  ufw:
+    rule: allow
+    port: 5666
+    from: "{{ nagios_server }}"
 
 # Link /usr/local/sbin/nrpe
