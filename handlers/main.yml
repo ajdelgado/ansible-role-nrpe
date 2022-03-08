@@ -10,11 +10,11 @@
 
  - name: restart nrpe
    service: name=nrpe state=restarted
-   when: ansible_os_family == 'RedHat'
+   when: ansible_facts["lsb"]["id"] <> "Ubuntu"
 
  - name: restart nrpe
    service: name=nagios-nrpe-server state=restarted
-   when: ansible_facts['distribution'] == "Debian"
+   when: ansible_facts["lsb"]["id"] == "Ubuntu"
 
  - name: restart opsview-agent
    service: name=opsview-agent state=restarted
