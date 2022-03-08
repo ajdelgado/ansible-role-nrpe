@@ -25,7 +25,7 @@
   package:  state=present name="{{ nrpe_extra_debs }}"
   notify:
     - "restart nrpe"
-  when: ansible_facts["lsb"]["id"] == "Ubuntu"
+  when: ansible_facts['distribution'] == "Debian"
 
 - name: Remove all hardcoded command settings from default nrpe.cfg
   lineinfile:
@@ -83,12 +83,12 @@
     enabled: yes
   when: ansible_os_family == 'RedHat'
 
-- name: Make sure nrpe is started and enabled in Ubuntu
+- name: Make sure nrpe is started and enabled in Debian
   service:
     name: nagios-nrpe-server
     state: started
     enabled: yes
-  when: ansible_facts["lsb"]["id"] == "Ubuntu"
+  when: ansible_facts['distribution'] == "Debian"
 
 - name: Allow nrpe_user to run some HP commands on HP systems
   template: src=sudoers_nrpe_hp dest=/etc/sudoers.d/sudoers_nrpe_hp mode=640
