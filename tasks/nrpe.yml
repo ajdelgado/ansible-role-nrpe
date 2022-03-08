@@ -27,10 +27,6 @@
     - "restart nrpe"
   when: ansible_facts["lsb"]["id"] == "Ubuntu"
 
-- name: Ensure installation in Raspbian
-  include_tasks: install_raspbian.yml
-  when: ansible_facts["lsb"]["id"] == "Raspbian"
-
 - name: Remove all hardcoded command settings from default nrpe.cfg
   lineinfile:
     state: absent
