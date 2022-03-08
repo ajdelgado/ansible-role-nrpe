@@ -36,7 +36,13 @@
     uid: 223
     group: nagios
 
-- name: Install source code
+- name: Compile source code of NRPE
+  shell: "make all"
+  args:
+    chdir: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}"
+    creates: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/src/nrpe"
+
+- name: Install NRPE
   shell: "make install"
   args:
     chdir: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}"
