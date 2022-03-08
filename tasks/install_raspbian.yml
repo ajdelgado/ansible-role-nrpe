@@ -37,13 +37,13 @@
     group: nagios
 
 - name: Install source code
-  shell: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/make install"
+  shell: "make install"
   args:
     chdir: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}"
     #creates: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/uninstall"
 
 - name: Install configuration files from source code
-  shell: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/make install-config"
+  shell: "make install-config"
   args:
     chdir: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}"
     #creates: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/uninstall"
@@ -53,7 +53,7 @@
 #echo 'nrpe    5666/tcp' >> /etc/services
 
 - name: Install systemd unit for NRPE
-  shell: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/make install-init"
+  shell: "make install-init"
   args:
     chdir: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}"
     #create: "/usr/src/nrpe-nrpe-{{ nrpe_raspbian_version }}/uninstall"
