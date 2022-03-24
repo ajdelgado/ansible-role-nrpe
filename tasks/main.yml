@@ -10,8 +10,4 @@
 - include_tasks: sudo.yml
   when: nrpe_disable_sudo_requiretty
 
-- include_tasks: opsview.yml
-  when: ansible_os_family == "RedHat" and install_opsview and not install_nrpe
-
-- include_tasks: nrpe.yml
-  when: not install_opsview and install_nrpe
+- include: nrpe.yml
