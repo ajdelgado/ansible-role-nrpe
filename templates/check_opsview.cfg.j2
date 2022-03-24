@@ -1,5 +1,0 @@
-{% if opsview_plugins is defined %}
-{% for i in opsview_plugins %}
-command[{{ i.command }}]={{ i.path }} {{ i.arguments }}
-{% endfor %}
-{% endif %}
