@@ -13,6 +13,6 @@
     uid: "{{ nagios_uid }}"
     group: nagios
     comment: "nagios user"
-    home: "/var/log/nagios"
+    home: "{{ nagios_user_home }}"
     shell: /bin/bash
     state: present

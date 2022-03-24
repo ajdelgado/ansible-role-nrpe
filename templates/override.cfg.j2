@@ -25,8 +25,11 @@ log_facility=daemon
 # number.  The file is only written if the NRPE daemon is started by the root
 # user and is running in standalone mode.
 
-pid_file=/var/run/nrpe/nrpe.pid
+# RedHat
+#pid_file=/var/run/nrpe/nrpe.pid
 
+# Ubuntu
+#pid_file=/run/nagios/nrpe.pid
 
 
 # PORT NUMBER

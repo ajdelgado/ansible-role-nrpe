@@ -1,14 +1,13 @@
 ---
 # tasks file for ansible-role-nrpe
 
-- include: add_additional_nrpe_checks.yml
+- include_tasks: add_additional_nrpe_checks.yml
   when: additional_nrpe_checks is defined
 
-- include: user.yml
+- include_tasks: user.yml
   when: nrpe_user_creation
 
-- include: sudo.yml
+- include_tasks: sudo.yml
   when: nrpe_disable_sudo_requiretty
 
 - include: nrpe.yml
-  when: ansible_os_family == "RedHat"

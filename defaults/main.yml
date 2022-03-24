@@ -12,6 +12,7 @@ nrpe_user: "nrpe"
 nrpe_group: "nrpe"
 nagios_uid: "5900"
 nagios_gid: "900"
+nagios_user_home: /var/log/nagios
 
 # Set this to true to set Defaults:nrpe_user !requiretty in sudoers
 nrpe_disable_sudo_requiretty: False
@@ -72,6 +73,19 @@ nrpe_extra_rpms:
  - nagios-plugins-swap
  - nagios-plugins-tcp
  - nagios-plugins-time
+
+nrpe_extra_debs:
+ - nagios4-common
+ - monitoring-plugins
+ - monitoring-plugins-basic
+ - monitoring-plugins-standard
+ - monitoring-plugins-btrfs
+ - monitoring-plugins-common
+ - nagios-plugins-contrib
+ - nagios-plugins-rabbitmq
+ - nordugrid-arc-nagios-plugins
+ - mcollective-plugins-nrpe
+ - nagios-snmp-plugins
 
 # Download git repos with additional check
 # One can use the commands list to easily add speicifc scripts from specific repos
