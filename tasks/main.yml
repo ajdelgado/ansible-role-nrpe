@@ -10,4 +10,4 @@
 - include_tasks: sudo.yml
   when: nrpe_disable_sudo_requiretty
 
-- include: nrpe.yml
+- include_tasks: nrpe.yml
