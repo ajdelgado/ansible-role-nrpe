@@ -13,7 +13,7 @@
    listen: restart nrpe
    when: ansible_facts["lsb"]["id"] != "Ubuntu"
 
- - name: restart nrpe
+ - name: restart nrpe in ubuntu
    service: name=nagios-nrpe-server state=restarted
    listen: restart nrpe
    when: ansible_facts["lsb"]["id"] == "Ubuntu"
