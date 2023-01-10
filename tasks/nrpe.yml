@@ -1,6 +1,16 @@
 ---
 # tasks file for ansible-role-nrpe
 #
+- name: Set the service name for NRPE in Ubuntu
+  set_fact:
+    nrpe_service_name: nagios-nrpe-server
+  when: ansible_facts["lsb"]["id"] == "Ubuntu"
+
+- name: Set the service name for NRPE in non-Ubuntu
+  set_fact:
+    nrpe_service_name: nrpe
+  when: ansible_facts["lsb"]["id"] != "Ubuntu"
+
 - name: Compile and install in Raspbian
   import_tasks: install_raspbian.yml
   when: ansible_facts["lsb"]["id"] == 'Raspbian'
