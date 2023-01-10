@@ -70,10 +70,10 @@
   notify:
     - "restart nrpe"
 
-- name: Ensure override config file is included
+- name: Ensure inclusion of other config files
   lineinfile:
     path: /etc/nagios/nrpe.cfg
-    line: "include={{ nagios_cfg_file | dirname }}"
+    line: "include={{ nagios_include_dir }}"
     backup: yes
   notify:
     - "restart nrpe"

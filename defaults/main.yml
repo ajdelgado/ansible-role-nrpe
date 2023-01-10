@@ -19,7 +19,8 @@ nrpe_disable_sudo_requiretty: False
 
 ########
 
-nagios_cfg_file: "/etc/nrpe.d/override.cfg"
+nagios_include_dir: "/etc/nrpe.d/"
+nagios_cfg_file: "{{ nagios_include_dir }}/override.cfg"
 nagios_allowed_hosts: "127.0.0.1,10.1.1.1,10.2.2.2"
 
 # Remove all command[*] entries from the default nrpe.cfg file.
@@ -41,8 +42,6 @@ nagios_connection_timeout: 300
 
 #nagios_extra_settings_list:
 # - include_dir={{ nagios_include_dir }}
-
-nagios_include_dir: "/etc/nrpe.d/"
 
 nagios_plugins_dir: "/usr/lib64/nagios/plugins"
 
