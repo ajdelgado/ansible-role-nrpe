@@ -8,12 +8,14 @@
      - commands
    when: item[1].setype is defined
 
- - name: restart nrpe
+ - name: restart nrpe non-ubuntu
    service: name=nrpe state=restarted
+   listen: restart nrpe
    when: ansible_facts["lsb"]["id"] != "Ubuntu"
 
  - name: restart nrpe
    service: name=nagios-nrpe-server state=restarted
+   listen: restart nrpe
    when: ansible_facts["lsb"]["id"] == "Ubuntu"
 
  - name: restart opsview-agent
