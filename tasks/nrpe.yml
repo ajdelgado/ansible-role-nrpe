@@ -83,7 +83,7 @@
 - name: Ensure inclusion of other config files
   lineinfile:
     path: /etc/nagios/nrpe.cfg
-    line: "include={{ nagios_include_dir }}"
+    line: "include_dir={{ nagios_include_dir }}/"
     backup: yes
   notify:
     - "restart nrpe"
