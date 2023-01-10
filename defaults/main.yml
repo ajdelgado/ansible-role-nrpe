@@ -19,7 +19,7 @@ nrpe_disable_sudo_requiretty: False
 
 ########
 
-nagios_include_dir: "/etc/nrpe.d/"
+nagios_include_dir: "/etc/nrpe.d"
 nagios_cfg_file: "{{ nagios_include_dir }}/override.cfg"
 nagios_allowed_hosts: "127.0.0.1,10.1.1.1,10.2.2.2"
 
