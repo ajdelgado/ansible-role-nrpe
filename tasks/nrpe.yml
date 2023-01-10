@@ -63,10 +63,17 @@
   notify:
     - "restart nrpe"
 
+- name: Ensure default config file exists
+  file:
+    path: /etc/nagios/nrpe.cfg
+    state: touch
+  notify:
+    - "restart nrpe"
+
 - name: Ensure override config file is included
   lineinfile:
     path: /etc/nagios/nrpe.cfg
-    line: "include={{ nagios_cfg_file }}"
+    line: "include={{ nagios_cfg_file | dirname }}"
     backup: yes
   notify:
     - "restart nrpe"
