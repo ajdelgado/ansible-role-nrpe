@@ -4,12 +4,14 @@
 - name: Set the service name for NRPE in Ubuntu
   set_fact:
     nrpe_service_name: nagios-nrpe-server
-  when: ansible_facts["lsb"]["id"] == "Ubuntu"
+  when: ansible_facts["distribution"] == "Ubuntu" or ansible_facts["distribution"] == "Pop!_OS"
 
 - name: Set the service name for NRPE in non-Ubuntu
   set_fact:
     nrpe_service_name: nrpe
-  when: ansible_facts["lsb"]["id"] != "Ubuntu"
+  when:
+    - ansible_facts["distribution"] != "Ubuntu" 
+    - ansible_facts["distribution"] != "Pop!_OS"
 
 - name: Compile and install in Raspbian
   import_tasks: install_raspbian.yml

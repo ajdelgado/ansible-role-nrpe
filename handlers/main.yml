@@ -13,7 +13,7 @@
     name: "{{ nrpe_service_name }}"
     state: restarted
    listen: restart nrpe
-   when: ansible_facts["lsb"]["id"] != "Ubuntu"
+   when: ansible_facts["distribution"] == "Ubuntu" or ansible_facts["distribution"] == "Pop!_OS"
 
  - name: restart opsview-agent
    service: name=opsview-agent state=restarted
