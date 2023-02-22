@@ -7,7 +7,12 @@
     src: /lib/systemd/system/nagios-nrpe-server.service
     state: link
   when: ansible_facts["distribution"] == "Ubuntu" or ansible_facts["distribution"] == "Pop!_OS"
-  notify: reload systemd
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: true
+  when: ansible_facts["distribution"] == "Ubuntu" or ansible_facts["distribution"] == "Pop!_OS"
+
 
 - name: Compile and install in Raspbian
   import_tasks: install_raspbian.yml
