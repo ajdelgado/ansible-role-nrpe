@@ -10,7 +10,7 @@
 
  - name: restart nrpe
    service:
-    name: nagios-nrpe-server
+    name: "{{ nrpe_service_name }}"
     state: restarted
    listen: restart nrpe
    when: ansible_facts["distribution"] == "Ubuntu" or ansible_facts["distribution"] == "Pop!_OS"
