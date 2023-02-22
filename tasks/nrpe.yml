@@ -9,9 +9,7 @@
 - name: Set the service name for NRPE in non-Ubuntu
   set_fact:
     nrpe_service_name: nrpe
-  when:
-    - ansible_facts["distribution"] != "Ubuntu" 
-    - ansible_facts["distribution"] != "Pop!_OS"
+  when: ansible_facts["distribution"] == "Debian" or ansible_os_family == 'RedHat'
 
 - name: Compile and install in Raspbian
   import_tasks: install_raspbian.yml
