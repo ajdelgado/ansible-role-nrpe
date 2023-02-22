@@ -10,7 +10,7 @@
 
 - name: restart nrpe
   service:
-    name: "{{ nrpe_service_name }}"
+    name: nrpe
     state: restarted
   listen: restart nrpe
 
