@@ -8,6 +8,10 @@
     - commands
   when: item[1].setype is defined
 
+- name: reload systemd
+  systemd:
+    daemon_reload: true
+
 - name: restart nrpe
   service:
     name: nrpe
@@ -16,4 +20,3 @@
 
 - name: restart opsview-agent
   service: name=opsview-agent state=restarted
-  
