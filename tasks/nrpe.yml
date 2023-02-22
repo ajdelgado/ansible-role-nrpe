@@ -13,10 +13,6 @@
     - ansible_facts["distribution"] != "Ubuntu" 
     - ansible_facts["distribution"] != "Pop!_OS"
 
-- name: Show service name
-  debug:
-    msg: "Service for NRPE should be '{{ nrpe_service_name }}"
-
 - name: Compile and install in Raspbian
   import_tasks: install_raspbian.yml
   when: ansible_facts["lsb"]["id"] == 'Raspbian'
