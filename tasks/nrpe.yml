@@ -1,15 +1,15 @@
 ---
 # tasks file for ansible-role-nrpe
 #
-- name: Set the service name for NRPE in Ubuntu
-  set_fact:
-    nrpe_service_name: nagios-nrpe-server
-  when: ansible_facts["distribution"] == "Ubuntu" or ansible_facts["distribution"] == "Pop!_OS"
+# - name: Set the service name for NRPE in Ubuntu
+#   set_fact:
+#     nrpe_service_name: nagios-nrpe-server
+#   when: ansible_facts["distribution"] == "Ubuntu" or ansible_facts["distribution"] == "Pop!_OS"
 
-- name: Set the service name for NRPE in non-Ubuntu
-  set_fact:
-    nrpe_service_name: nrpe
-  when: ansible_facts["distribution"] == "Debian" or ansible_os_family == 'RedHat'
+# - name: Set the service name for NRPE in non-Ubuntu
+#   set_fact:
+#     nrpe_service_name: nrpe
+#   when: ansible_facts["distribution"] == "Debian" or ansible_os_family == 'RedHat'
 
 - name: Compile and install in Raspbian
   import_tasks: install_raspbian.yml
@@ -97,11 +97,11 @@
   notify:
     - "restart nrpe"
 
-- name: Make sure nrpe is started and enabled
-  service:
-    name: "{{ nrpe_service_name }}"
-    state: started
-    enabled: yes
+# - name: Make sure nrpe is started and enabled
+#   service:
+#     name: "{{ nrpe_service_name }}"
+#     state: started
+#     enabled: yes
 
 - name: Allow nrpe_user to run some HP commands on HP systems
   template: src=sudoers_nrpe_hp dest=/etc/sudoers.d/sudoers_nrpe_hp mode=640
