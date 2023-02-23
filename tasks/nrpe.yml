@@ -1,19 +1,6 @@
 ---
 # tasks file for ansible-role-nrpe
 #
-- name: Create systemd unit alias for Ubuntu based distributions
-  file:
-    path: /lib/systemd/system/nrpe.service
-    src: /lib/systemd/system/nagios-nrpe-server.service
-    state: link
-  when: ansible_facts["distribution"] == "Ubuntu" or ansible_facts["distribution"] == "Pop!_OS"
-
-- name: Reload systemd
-  systemd:
-    daemon_reload: true
-  when: ansible_facts["distribution"] == "Ubuntu" or ansible_facts["distribution"] == "Pop!_OS"
-
-
 - name: Compile and install in Raspbian
   import_tasks: install_raspbian.yml
   when: ansible_facts["lsb"]["id"] == 'Raspbian'
@@ -42,6 +29,18 @@
   package:  state=present name="{{ nrpe_extra_debs }}"
   notify:
     - "restart nrpe"
+  when: ansible_facts["distribution"] == "Ubuntu" or ansible_facts["distribution"] == "Pop!_OS"
+
+- name: Create systemd unit alias for Ubuntu based distributions
+  file:
+    path: /lib/systemd/system/nrpe.service
+    src: /lib/systemd/system/nagios-nrpe-server.service
+    state: link
+  when: ansible_facts["distribution"] == "Ubuntu" or ansible_facts["distribution"] == "Pop!_OS"
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: true
   when: ansible_facts["distribution"] == "Ubuntu" or ansible_facts["distribution"] == "Pop!_OS"
 
 - name: Remove all hardcoded command settings from default nrpe.cfg
