@@ -11,7 +11,7 @@
     name: nagios-nrpe-server
   notify:
     - "restart nrpe"
-  when: ansible_facts["lsb"]["id"] == "Ubuntu"
+  when: ansible_facts["distribution"] == "Ubuntu" or ansible_facts["distribution"] == "Pop!_OS"
 
 - name: Install nrpe RPM package
   package: state=present name=nrpe
@@ -29,7 +29,19 @@
   package:  state=present name="{{ nrpe_extra_debs }}"
   notify:
     - "restart nrpe"
-  when: ansible_facts["lsb"]["id"] == "Ubuntu"
+  when: ansible_facts["distribution"] == "Ubuntu" or ansible_facts["distribution"] == "Pop!_OS"
+
+- name: Create systemd unit alias for Ubuntu based distributions
+  file:
+    path: /lib/systemd/system/nrpe.service
+    src: /lib/systemd/system/nagios-nrpe-server.service
+    state: link
+  when: ansible_facts["distribution"] == "Ubuntu" or ansible_facts["distribution"] == "Pop!_OS"
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: true
+  when: ansible_facts["distribution"] == "Ubuntu" or ansible_facts["distribution"] == "Pop!_OS"
 
 - name: Remove all hardcoded command settings from default nrpe.cfg
   lineinfile:
@@ -63,10 +75,17 @@
   notify:
     - "restart nrpe"
 
-- name: Ensure override config file is included
+- name: Ensure default config file exists
+  file:
+    path: /etc/nagios/nrpe.cfg
+    state: touch
+  notify:
+    - "restart nrpe"
+
+- name: Ensure inclusion of other config files
   lineinfile:
     path: /etc/nagios/nrpe.cfg
-    line: "include={{ nagios_cfg_file }}"
+    line: "include_dir={{ nagios_include_dir }}/"
     backup: yes
   notify:
     - "restart nrpe"
@@ -80,19 +99,11 @@
   notify:
     - "restart nrpe"
 
-- name: Make sure nrpe is started and enabled in RedHat
+- name: Make sure nrpe is started and enabled
   service:
     name: nrpe
     state: started
     enabled: yes
-  when: ansible_os_family == 'RedHat'
-
-- name: Make sure nrpe is started and enabled in Ubuntu
-  service:
-    name: nagios-nrpe-server
-    state: started
-    enabled: yes
-  when: ansible_facts["lsb"]["id"] == "Ubuntu"
 
 - name: Allow nrpe_user to run some HP commands on HP systems
   template: src=sudoers_nrpe_hp dest=/etc/sudoers.d/sudoers_nrpe_hp mode=640
