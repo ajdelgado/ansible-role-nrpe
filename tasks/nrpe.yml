@@ -43,7 +43,7 @@
     state: link
   when:
     - ansible_facts["distribution"] == "Ubuntu" or ansible_facts["distribution"] == "Pop!_OS"
-    - nrpe_srv_unit_file.stat.islnk or not nrpe_srv_unit_file.stat.exists
+    - not nrpe_srv_unit_file.stat.exists or (nrpe_srv_unit_file.stat.islnk is defined and nrpe_srv_unit_file.stat.islnk)
 
 - name: Reload systemd
   systemd:
