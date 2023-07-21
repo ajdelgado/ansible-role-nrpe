@@ -3,7 +3,7 @@
 #
 - name: Compile and install in Raspbian
   import_tasks: install_raspbian.yml
-  when: ansible_facts["lsb"]["id"] == 'Raspbian'
+  when: ansible_os_family != 'RedHat' and ansible_facts["lsb"]["id"] == 'Raspbian'
 
 - name: Install nrpe DEB package
   package:
