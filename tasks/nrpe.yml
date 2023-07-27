@@ -115,3 +115,10 @@
 - name: Allow nrpe_user to run some HP commands on HP systems
   template: src=sudoers_nrpe_hp dest=/etc/sudoers.d/sudoers_nrpe_hp mode=640
   when: ansible_system_vendor == "HP"
+
+- name: Ensure Nagios cache folder exists
+  file:
+    path: /var/cache/nagios
+    state: directory
+    owner: "{{ nrpe_user }}"
+    group: "{{ nrpe_group }}"
