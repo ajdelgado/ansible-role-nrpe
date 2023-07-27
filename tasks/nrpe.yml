@@ -122,3 +122,4 @@
     state: directory
     owner: "{{ nrpe_user }}"
     group: "{{ nrpe_group }}"
+    mode: 0770
