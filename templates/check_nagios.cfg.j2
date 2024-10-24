@@ -1,6 +1,6 @@
 {% if nagios_plugins is defined %}
 {% for i in nagios_plugins %}
-command[{{ i.command }}]={% if require_sudo in i and i.require_sudo %}sudo {% endif %}{{ i.path }} {{ i.arguments }}
+command[{{ i.command }}]={% if i.require_sudo is defined and i.require_sudo %}sudo {% endif %}{{ i.path }} {{ i.arguments }}
 {% endfor %}
 {% endif %}
 
